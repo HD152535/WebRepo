@@ -8,14 +8,15 @@
 </head>
 <body>
 <%
-	Integer cnt = (Integer) session.getAttribute("cnt");
-	if(cnt == null){
+	Integer cnt =  (Integer) session.getAttribute("cnt");
+	if (cnt == null) {
 		out.println("최초 호출");
 		cnt = 0;
 	}
 	session.setAttribute("cnt", ++cnt);
 %>
-<h1>cnt : <%= cnt %></h1>
+
+<h1> cnt : <%= cnt%></h1>
 <br>
 <%= request.getHeader("Cookie") %>
 </body>

@@ -1,6 +1,6 @@
+<%@page import="java.text.SimpleDateFormat, java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import ="java.text.SimpleDateFormat, java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,30 +14,24 @@
 </form>
 <%-- 스크립틀릿 tag로 1~입력받은 숫자까지의 합 구하기 --%>
 <%-- 결과 출력 시 변수 값은 표현식 tag로 작성하기 (jsp 파일 로딩시에는 보이지 않음) --%>
-
-<%
-	String num1 = request.getParameter("num");
-
-	if(num1 != null)
+<%	
+	String num;
+	int n = 0;
+	long sum = 0;
+	if (request.getParameter("num") != null)
 	{
-	int n = Integer.parseInt(num1);
-	int sum = 0;
-	
-	for(int i=0; i<=n; i++)
-	{
-		sum+=i;
-	}
-	if (sum != 0) {	
+		num = request.getParameter("num");
+		n = Integer.parseInt(num);
+	for (int i = 1; i <= n; i++) {
+			sum += i;
+		}
 %>
-<h1>1 ~ <%= n %>까지의 합은 <%= sum %>입니다.</h1>
+	<h1>1 ~ <%=num%>까지의 합은 <%=sum%>입니다. </h1>
 <%
 	}
-	}
-%>
-<%
 	// 현재 일시 구하기
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a");
 %>
-현재 일시는 <%= sdf.format(new Date()) %>
+현재 일시는 <%= sdf.format(new Date())%>
 </body>
 </html>
