@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ page import="org.dimigo.vo.UserVO" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+       pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-<link rel="stylesheet" href="/WebClass/css/footer.css">
+<%--<link rel="stylesheet" href="/css/signin.css">--%>
 <style>
 div.container {
   padding-top: 30px;
@@ -19,7 +19,7 @@ div.container {
 
 <script>
 function menu_over(e) {
-   e.setAttribute("class", "nav-item active"); //jsp는 프레젠테이션 담당 출력용
+   e.setAttribute("class", "nav-item active");
 }
 function menu_out(e) {
    e.setAttribute("class", "nav-item");
@@ -36,39 +36,30 @@ function menu_out(e) {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
      <%@ include file="menu.jsp" %>
-     
-    <%-- 세션에 사용자 정보가 없는 경우 --%>
-    <%
-       UserVO user = (UserVO) session.getAttribute("user"); //String이니까 userVO타입으로 타입캐스팅해서 받아줘야함
-       if(user==null){ // 아직 노 로그인이면
-    %>
-       <a class="text-bold text-white" style="text-decoration: none" href="/WebClass/login">Sign in</a> <!-- a태그는 get방식 --> <!-- 서블릿을 통해 로그인창으로 sign in ! -->
+     <c:if test="${ empty user }">
+    <%-- 세션이 없는 경우 --%>
+       <a class="text-bold text-white" style="text-decoration: none" href="/LoginServlet">Sign in</a>
        <span class="text-bold text-white">&nbsp; or &nbsp;</span>
-       <a class="text-bold text-white" style="text-decoration: none" href="/WebClass/signup">Sign up</a>
-       
-    <% }
-       
-    else { %>
-    
-    <%-- 세션에 사용자 정보가 있는 경우 --%>
+       <a class="text-bold text-white" style="text-decoration: none" href="/SignUpServlet">Sign up</a>
+     </c:if>
+     <c:if test="${ user != null}">
+    <%-- 세션이 있는 경우 --%>
        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
        <li class="nav-item dropdown">
          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%=user.getName()+"님 환영합니다." %>
+           ${sessionScope.user.name}님
          </a>
          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
-            <form action="/WebClass/logout" method="post"> <!-- action은 서블릿 주소 호출 -get방식이 기본으로 잡혀있으니 메소드를 포스트로 바꿔줘야함--> 
-            <button type="submit" class="dropdown-item">Sign out</button>
-            </form>
-             <div class="dropdown-divider"></div>
+           <form action="/LogoutServlet" method="post">
+              <button type="submit" class="dropdown-item">Sign out</button>
+           </form>
+           <div class="dropdown-divider"></div>
            <button type="button" class="dropdown-item">Action1</button>
            <button type="button" class="dropdown-item">Action2</button>
          </div>
        </li>
        </ul>
-       
-    <% }  %>
-    
+     </c:if>
   </div>
 </nav>
 <div class="container">

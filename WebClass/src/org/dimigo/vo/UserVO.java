@@ -6,6 +6,24 @@ public class UserVO {
 	private String name;
 	private String nickname;
 	
+	
+	
+	/**
+	 * @param id
+	 * @param name
+	 * @param nickname
+	 */
+	public UserVO() {
+		
+	}
+	
+	public UserVO(String id, String name, String nickname) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.nickname = nickname;
+	}
+	
 	public String getId() {
 		return id;
 	}
